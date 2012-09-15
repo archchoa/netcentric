@@ -89,3 +89,7 @@ def tag_word(request):
 			return HttpResponse(status=200)
 		return HttpResponse(status=500)
 	return HttpResponse(status=500)
+
+@login_required
+def validate_word(request):
+	return render_to_response('webtagger/validate_word.html', context_instance=RequestContext(request))

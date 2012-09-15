@@ -10,10 +10,8 @@
 
 {% block tab %}
 <ul class="nav nav-tabs">
-	<li class="active">
-		<a href="#">Article Tagging Module</a>
-	</li>
-	<li><a href="/webtagger/validate_word">Validation Module</a></li>
+	<li><a href="/webtagger/list_of_sentences">Article Tagging Module</a></li>
+	<li class="active"><a href="#">Validation Module</a></li>
 	<li><a href="/webtagger/upload_xml_file">Admin Settings</a></li>
 </ul>
 {% endblock %}
@@ -21,65 +19,93 @@
 {% block content %}
 <div class="span11">
 
-	<h2>Tag the Sentence</h2>
+	<h2>Validate Word</h2>
 
 	<div class="alert alert-info">
-		<p style="font-size: 18px">{{ sentence_obj.sentence }}</p>
+		<p style="font-size: 24px; text-align:center;">baka</p>
 	</div>
-	<form class="form-horizontal" action="." method="POST">
-		{% csrf_token %}
 
-		<input type="hidden" name="sentence_id" value="{{ sentence_obj.id }}" />
-		<input type="submit" name="positive" value="Positive" class="btn btn-success" />
-		<input type="submit" name="neutral" value="Neutral" class="btn btn-warning"/>
-		<input type="submit" name="negative" value="Negative" class="btn btn-danger"/>
-		<input type="submit" name="noa" value="Not an Opinion" class="btn btn-primary"/>
-
-	</form>
-	{% if tag %}
-	<p>You chose {{ tag }} as your tag.</p>
-	{% endif %}
-
-	<br>
-	<br>
 	<div class="row-fluid">
-	    <div class="span6">
-			<h4><i class="icon-list"></i> Metadata</h4>
-			<dl>
-			    <dt>Article Title</dt>
-			    <dd></dd>
-			    <dt>Author</dt>
-			    <dd></dd>
-			    <dt>Date</dt>
-			    <dd></dd>
-			    <dt>Sentence No</dt>
-			    <dd></dd>
-			    <dt>URL</dt>
-			    <dd></dd>
-		    </dl>
-	    </div>
-	    <div class="span6">
-			<h4><i class="icon-tasks"></i> Statistics</h4>
-			<dl>
-			    <dt>Progress</dt>
-			    <dd>
-			    	<div class="progress progress-info progress-striped">
-		    		<div class="bar" style="width: 20%">40 / 200 sentences</div>
-		    	    </div>
-				</dd>
-			    <dt>Tag Distribution</dt>
-			    <dd>
-				    <div class="progress">
-				    <div class="bar bar-success" style="width: 50%;">20 positive</div>
-				    <div class="bar bar-warning" style="width: 10%;">4 neutral</div>
-				    <div class="bar bar-danger" style="width: 30%;">12 neutral</div>
-				    <div class="bar bar-info" style="width: 10%;">4 neutral</div>
-				    </div>
-			    </dd>
-			</dl>
+		<div class="span6">
+			<div class="btn-group">
+				<button class="btn">Show Concordancer</button>
+				<button class="btn">Hide Concordancer</button>
+			</div>
+			
 		</div>
-	    
+		<div class="span6">
+					<div class="progress progress-info progress-striped">
+				    	<div class="bar" style="width: 50%">100 / 200 words</div>
+				    </div>
+		</div>
+	</div>	
+
+	<br>
+	<h4><i class="icon-list"></i> Word Annotation</h4>
+	<div class="span11">
+	<dl class="dl-horizontal">
+		<dt>Polarity</dt>
+			<dd>
+				<label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox1" value="option1"> positive
+			    </label>
+			    <label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox2" value="option2"> negative
+			    </label>
+			    <label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox3" value="option3"> neutral
+			    </label>
+			</dd>
+		<dt>Strength</dt>
+			<dd>
+				<label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox1" value="option1"> weak
+			    </label>
+			    <label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox2" value="option2"> strong
+			    </label>
+			</dd>
+		<dt>Stemmed / Root</dt>
+			<dd>
+				<label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox1" value="option1"> root
+			    </label>
+			    <label class="checkbox inline">
+			    <input type="checkbox" id="inlineCheckbox2" value="option2"> stemmed
+			    </label>
+			</dd>	
+	</dl>
+	<br>
+	<br>
     </div>
+
+
+	<h4><i class="icon-list"></i> Concordancer</h4>
+	<table class="table table-hover">
+        <thead>  
+          <tr>  
+            <th>Sentences</th>  
+          </tr>  
+        </thead>  
+        <tbody>  
+          <tr>  
+            <td><span class="label label-warning">baka</span> ako</td>  
+          </tr>   
+          <tr>  
+            <td><span class="label label-warning">baka</span> sila</td>  
+          </tr>             
+          <tr>  
+            <td><span class="label label-warning">baka</span> kayo</td>  
+          </tr> 
+          <tr>  
+            <td><span class="label label-warning">baka</span></td>  
+          </tr> 
+
+        </tbody>   
+    </table>
+
+
+
 </div>
 {% endblock %}
 {% block scripts %}

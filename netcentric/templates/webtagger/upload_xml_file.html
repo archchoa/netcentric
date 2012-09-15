@@ -1,10 +1,34 @@
 {% extends 'webtagger/base.html' %}
 {% load url from future %}
+{% block tab %}
+<ul class="nav nav-tabs">
+	<li><a href="/webtagger/list_of_sentences">Article Tagging Module</a></li>
+	<li><a href="/webtagger/validate_word">Validation Module</a></li>
+	<li class="active"><a href="#">Admin Settings</a></li>
+</ul>
+{% endblock %}
 {% block content %}
-<h1>Upload XML File</h1>
-<form action="{% url 'upload_xml_file' %}" method="POST" enctype="multipart/form-data">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Upload XML file"/>
-</form>
+<div class="span11">
+	<div class="row-fluid">
+		<div class="span6">
+			<h3>Upload Articles</h3>
+
+			<form action="{% url 'upload_xml_file' %}" method="POST" enctype="multipart/form-data" class="navbar-form pull-left">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" class="btn btn-primary" value="Submit"/>
+			</form>
+		</div>
+
+		<div class="span6">
+			<h3>Upload Words</h3>
+
+			<form method="POST" enctype="multipart/form-data" class="navbar-form pull-left">
+				{% csrf_token %}
+				{{ form.as_p }}
+				<input type="submit" class="btn btn-primary" value="Submit"/>
+			</form>
+		</div>
+	</div>
+</div>
 {% endblock %}
