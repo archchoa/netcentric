@@ -1,0 +1,10 @@
+{% extends 'webtagger/base.html' %}
+{% load url from future %}
+{% block content %}
+<h1>Upload XML File</h1>
+<form action="{% url 'upload_xml_file' %}" method="POST" enctype="multipart/form-data">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" value="Upload XML file"/>
+</form>
+{% endblock %}

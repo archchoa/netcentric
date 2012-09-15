@@ -1,4 +1,18 @@
 *.log
 *.pot
+
+# Python files
 *.pyc
-local_settings.py
+
+# Local settings
+netcentric/localsettings.py
+
+# Migration files
+
+accounts/migrations/
+webtagger/migrations/
+
+# Some Files
+.sass-cache/
+wdwebsite.sublime-project
+wdwebsite.sublime-workspace

@@ -1,0 +1,115 @@
+{% extends 'webtagger/base.html' %}
+{% load url from future %}
+{% block css %}
+<style type="text/css">
+	.highlight-container {
+		display: inline;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div class="span8">
+	<div class="page-header">
+		<h2>Tag the Sentence</h2>
+	</div>
+	<p>{{ sentence_obj.sentence }}</p>
+	<form class="form-horizontal" action="." method="POST">
+		{% csrf_token %}
+		<div class="control-group">
+			<div class="controls">
+				<input type="hidden" name="sentence_id" value="{{ sentence_obj.id }}" />
+				<input type="submit" name="positive" value="Positive" class="btn btn-success" />
+				<input type="submit" name="neutral" value="Neutral" class="btn btn-warning"/>
+				<input type="submit" name="negative" value="Negative" class="btn btn-danger"/>
+				<input type="submit" name="noa" value="Not an Opinion" class="btn btn-primary"/>
+			</div>
+		</div>
+	</form>
+	{% if tag %}
+	<p>You chose {{ tag }} as your tag.</p>
+	{% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+	// Django CSRF framework
+	$(document).ajaxSend(function(event, xhr, settings) {
+		function getCookie(name) {
+			var cookieValue = null;
+			if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+					var cookie = jQuery.trim(cookies[i]);
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) == (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		function sameOrigin(url) {
+			// url could be relative or scheme relative or absolute
+			var host = document.location.host; // host + port
+			var protocol = document.location.protocol;
+			var sr_origin = '//' + host;
+			var origin = protocol + sr_origin;
+			// Allow absolute or scheme relative URLs to same origin
+			return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+				(url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+				// or any other URL that isn't scheme relative or absolute i.e relative.
+				!(/^(\/\/|http:|https:).*/.test(url));
+		}
+		function safeMethod(method) {
+			return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
+
+		if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+			xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+		}
+	});
+
+	$(document).ready(function() {
+	
+		var tagUrl = "{% url 'tag_word' %}";
+	
+		jQuery.each($("span.highlight"), function() {
+			$(this).replaceWith('<a href="#" class="highlight" rel="popover" data-original-title="Tag This Word">' + $(this).text() + '</a>');
+		});
+
+		$(".highlight").click(function(e) {
+			e.preventDefault();
+		}).clickover({
+			trigger: 'manual',
+		}).click(function() {
+			var elem = $(this);
+			
+			var popoverElems = $(document.createElement('div')).append(
+				$(document.createElement('h4')).html(elem.text()),
+				$(document.createElement('strong')).html('Select Feature'),
+				$(document.createElement('select')).attr('name', 'feature_id').append(
+					$(document.createElement('option')).attr('value', '1').html('Strong Subjective'),
+					$(document.createElement('option')).attr('value', '2').html('Weak Subjective'),
+					$(document.createElement('option')).attr('value', '3').html('Positive'),
+					$(document.createElement('option')).attr('value', '4').html('Negative')
+				),
+				$(document.createElement('input')).attr({type: 'submit', class: 'btn btn-primary btn-tag', value: "Tag Word"}).click(function() {
+					$(this).attr('class', 'btn btn-danger');
+				})
+			);
+	
+			if (elem.toggleClass('active').hasClass('active')) {
+				elem.clickover('show');
+				$('.popover-content')
+					.empty()
+					.append(popoverElems);
+			} else {
+				popoverElems.detach();
+				elem.clickover('hide');
+			}
+		});
+		
+	});
+</script>
+{% endblock %}
