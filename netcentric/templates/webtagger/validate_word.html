@@ -10,9 +10,9 @@
 
 {% block tab %}
 <ul class="nav nav-tabs">
-	<li><a href="/webtagger/list_of_sentences">Article Tagging Module</a></li>
-	<li class="active"><a href="#">Validation Module</a></li>
-	<li><a href="/webtagger/upload_xml_file">Admin Settings</a></li>
+	<li><a href="{% url 'list_of_sentences' %}">Article Tagging Module</a></li>
+	<li class="active"><a href="{% url 'validate_word' %}">Validation Module</a></li>
+	<li><a href="{% url 'upload_xml_file' %}">Admin Settings</a></li>
 </ul>
 {% endblock %}
 

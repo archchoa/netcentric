@@ -12,6 +12,10 @@ netcentric/localsettings.py
 accounts/migrations/
 webtagger/migrations/
 
+# Whoosh files
+
+netcentric/whoosh_index/
+
 # Some Files
 .sass-cache/
 wdwebsite.sublime-project

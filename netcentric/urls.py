@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'netcentric.views.home', name='home'),
 	
 	url(r'^accounts/', include('allauth.urls')),
-	
+	url(r'^search/', include('haystack.urls')),
     url(r'^webtagger/', include('webtagger.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
